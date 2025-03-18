@@ -8,9 +8,11 @@ const chatRouter = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const { Socket } = require("socket.io");
 const path = require("path");
+const cors = require("cors");
 
 ConnectDB();
 const app = express();
+app.use(cors());
 app.use(express.json()); //For server to accept json
 
 // app.get("/", (req, res) => {
@@ -51,7 +53,7 @@ const server = app.listen(PORT, (req, res) => {
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:3000",
+    origin: "http://localhost:5173",
   },
 });
 
