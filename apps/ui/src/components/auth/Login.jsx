@@ -17,6 +17,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+
 import React from "react";
 import { useState } from "react";
 import SignUp from "./SignUp";
@@ -32,7 +33,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const submitHandler = async (req, res) => {
+  const submitHandler = async () => {
     setLoading(true);
     if (!email || !password) {
       toast({

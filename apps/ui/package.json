@@ -11,10 +11,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^2.0.10",
-    "@chakra-ui/react": "^2.3.5",
-    "@emoji-mart/data": "^1.0.6",
-    "@emoji-mart/react": "^1.0.1",
+    "@chakra-ui/icons": "2.0.10",
+    "@chakra-ui/react": "2.3.5",
+    "@chakra-ui/toast": "3.0.13",
+    "@emoji-mart/data": "1.0.6",
+    "@emoji-mart/react": "1.0.1",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
