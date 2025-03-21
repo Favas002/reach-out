@@ -31,7 +31,8 @@ import NoSelectedChat from "../miscellaneous/NoSelectedChat";
 import PaperClip from "../miscellaneous/PaperClip";
 import axiosInstance from "../../utils/axiosInstance";
 
-const ENDPOINT = "https://reach-out-chatapp.herokuapp.com/";
+// eslint-disable-next-line no-undef
+const ENDPOINT = import.meta.env.VITE_PUBLIC_BASE_URL;
 var socket, selectedChatCompare;
 
 const SingleChat = () => {
