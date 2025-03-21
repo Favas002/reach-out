@@ -49,7 +49,7 @@ const PaperClip = ({ setnewMessage, setNewimage, sendMessage }) => {
       data.append("cloud_name", "anoosh");
       data.append("folder", "chatImage");
 
-      fetch("https://api.cloudinary.com/v1_1/anoosh/image/upload/", {
+      fetch(import.meta.env.VITE_PUBLIC_CLOUDINARY, {
         method: "post",
         body: data,
       })

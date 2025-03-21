@@ -48,7 +48,7 @@ const SignUp = ({ click }) => {
       data.append("file", pics);
       data.append("upload_preset", "Reach-Out");
       data.append("cloud_name", "anoosh");
-      fetch("https://api.cloudinary.com/v1_1/anoosh/image/upload", {
+      fetch(import.meta.env.VITE_PUBLIC_CLOUDINARY, {
         method: "post",
         body: data,
       })
