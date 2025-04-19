@@ -70,22 +70,43 @@ const AuthUser = asyncHandler(async (req, res) => {
   }
 });
 
-//  api/user?search=john
 const allUser = asyncHandler(async (req, res) => {
-  const keyword = req.query.search
-    ? {
-        $or: [
-          { name: { $regex: req.query.search, $options: "i" } },
-          { email: { $regex: req.query.search, $options: "i" } },
-        ],
-      }
-    : {};
+  const { _start, _end, _sort, _order, search, ...filters } = req.query;
 
-  const users = await User.find(keyword).find({
-    _id: { $ne: req.user._id },
-  });
+  const query = {
+    ...filters,
+  };
 
-  res.send(users);
+  // Apply search if provided
+  if (search) {
+    query.$or = [
+      { name: { $regex: search, $options: "i" } },
+      { email: { $regex: search, $options: "i" } },
+    ];
+  }
+
+  // Exclude the current user
+  if (req.user?._id) {
+    query._id = { $ne: req.user._id };
+  }
+
+  // Build Mongo sort object
+  const sort = {};
+  if (_sort && _order) {
+    sort[_sort] = _order === "asc" ? 1 : -1;
+  }
+
+  const total = await User.countDocuments(query);
+
+  const users = await User.find(query)
+    .sort(sort)
+    .skip(Number(_start) || 0)
+    .limit(Number(_end) - Number(_start) || 10);
+
+  res.set("X-Total-Count", total);
+  res.set("Access-Control-Expose-Headers", "X-Total-Count");
+
+  res.status(200).json(users);
 });
 
 module.exports = { registerUser, AuthUser, allUser };

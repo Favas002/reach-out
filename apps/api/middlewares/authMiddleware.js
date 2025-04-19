@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/UserModel");
 const asyncHandler = require("express-async-handler");
 
+const SUPERADMIN_TOKEN = process.env.SUPERADMIN_TOKEN;
+
 const protect = asyncHandler(async (req, res, next) => {
   let token;
 
@@ -11,6 +13,12 @@ const protect = asyncHandler(async (req, res, next) => {
   ) {
     try {
       token = req.headers.authorization.split(" ")[1];
+
+      // Check if it's the special superadmin token
+      if (token === SUPERADMIN_TOKEN) {
+        req.user = { isSuperadmin: true }; // mark user as superadmin
+        return next();
+      }
 
       //decodes token id
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
